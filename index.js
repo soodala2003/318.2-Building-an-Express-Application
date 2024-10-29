@@ -9,49 +9,16 @@ const port = 3000;
 const fs = require("fs");
 // define the template engine
 app.engine("html", ejs.renderFile(filename, data, options, function(err, str) {
-  
+
 }));
 
 app.set("views", "./views"); // specify the views directory
 app.set("view engine", "ejs"); // register the template engine
 
 
-
-
-
-
-
-
-/* app.engine("html", (filePath, options, callback) => {
-  fs.readFile(filePath, (err, content) => {
-    if (err) return callback(err);
-    const rendered = content
-      .toString()
-      .replaceAll("#title#", `${options.title}`)
-      .replace("#content#", `${options.content}`);
-    return callback(null, rendered);
-  });
-});
-
-
 // To load the middleware function
 // serve static files from the styles directory */
-//app.use(logReq);
 //app.use(parser.json());
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 app.listen(port, () => {
   console.log(`Server listening on port: ${port}.`);
@@ -83,4 +50,4 @@ const logReq = function (req, res, next) {
   next();
 };
 
-
+app.use(logReq);
