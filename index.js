@@ -1,12 +1,45 @@
 const express = require("express");
 const ejs = require("ejs");
 const parser = require("body-parser");
+
 const app = express();
 const port = 3000;
 
-app.engine("html", ejs.renderFile);
-//app.set('view engine', 'ejs');
+// require the filesystem module
+const fs = require("fs");
+// define the template engine
+app.engine("html", (filePath, options, callback) => {
+  fs.readFile(filePath, (err, content) => {
+    if (err) return callback(err);
+    const rendered = content
+      .toString()
+      .replaceAll("#title#", `${options.title}`)
+      .replace("#content#", `${options.content}`);
+    return callback(null, rendered);
+  });
+});
 
+app.set("views", "./views"); // specify the views directory
+app.set("view engine", "hrml"); // register the template engine
+// To load the middleware function
+// serve static files from the styles directory
+//app.use(logReq);
+//app.use(parser.json());
+
+
+
+
+
+
+
+
+
+
+
+
+
+//app.engine("html", ejs.renderFile);
+//app.set('view engine', 'ejs');
 
 app.listen(port, () => {
   console.log(`Server listening on port: ${port}.`);
@@ -38,6 +71,4 @@ const logReq = function (req, res, next) {
   next();
 };
 
-// To load the middleware function
-app.use(logReq);
-app.use(parser.json());
+
