@@ -8,7 +8,9 @@ const port = 3000;
 // require the filesystem module
 const fs = require("fs");
 // define the template engine
-app.engine("html", ejs.renderFile);
+app.engine("html", ejs.renderFile(filename, data, options, function(err, str) {
+  
+}));
 
 app.set("views", "./views"); // specify the views directory
 app.set("view engine", "ejs"); // register the template engine
