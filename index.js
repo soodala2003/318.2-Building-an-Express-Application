@@ -1,9 +1,12 @@
 const express = require("express");
 const ejs = require("ejs");
+const parser = require("body-parser");
 const app = express();
 const port = 3000;
 
-app.set('view engine', 'ejs');
+app.engine("html", ejs.renderFile);
+//app.set('view engine', 'ejs');
+
 
 app.listen(port, () => {
   console.log(`Server listening on port: ${port}.`);
@@ -17,17 +20,17 @@ app.get("/express", (req,res) => {
   res.send("Creating routes with Express is simple!");
 });
 
-app.get("/user", (req, res) => {
-  res.send("Received a GET request for user!");
+app.get("/login", (req, res) => {
+  res.send("Received a GET request for login!");
 });
 
-app.post("/user", (req, res) => {
-  res.send(`Success!`);
+app.post("/login", (req, res) => {
+  res.send("Received a POST request for login!");
 });
 
 
-app.get("/user/:userID", (req, res) => {
-  res.send(`Navigated to the user page for: ${req.params.userID}.`);
+app.get("/login/:userID", (req, res) => {
+  res.send(`Navigated to the login page for: ${req.params.userID}.`);
 });
 
 const logReq = function (req, res, next) {
@@ -37,3 +40,4 @@ const logReq = function (req, res, next) {
 
 // To load the middleware function
 app.use(logReq);
+app.use(parser.json());
