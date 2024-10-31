@@ -1,53 +1,32 @@
 const express = require("express");
-const ejs = require("ejs");
-const parser = require("body-parser");
+const path = require("path");
 
 const app = express();
 const port = 3000;
 
-// require the filesystem module
-const fs = require("fs");
-// define the template engine
-app.engine("html", ejs.renderFile(filename, data, options, function(err, str) {
+const userRoutes = require("./routes/users");
+const postRoutes = require("./routes/posts");
 
-}));
-
-app.set("views", "./views"); // specify the views directory
-app.set("view engine", "ejs"); // register the template engine
+app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 
 
-// To load the middleware function
-// serve static files from the styles directory */
-//app.use(parser.json());
+app.set("view engine", "pug"); // register the template engine
+// ../views
+app.set("views", path.join(__dirname, "views"));
+
+// Parsing Middleware
+//app.use(bodyParser.urlencoded({ extended: true }));
+//app.use(bodyParser.json({ extended: true }));
+
+// Use our Routes
+//app.use("/api/users", users);
+//app.use("/api/posts", posts);
+
+app.get("/", (req, res) => {
+  res.send("Keeping it simple.");
+});
 
 app.listen(port, () => {
   console.log(`Server listening on port: ${port}.`);
 });
-
-app.get("/", (req, res) => {
-  res.send("Hello Express!");
-});
-
-app.get("/express", (req,res) => {
-  res.send("Creating routes with Express is simple!");
-});
-
-app.get("/login", (req, res) => {
-  res.send("Received a GET request for login!");
-});
-
-app.post("/login", (req, res) => {
-  res.send("Received a POST request for login!");
-});
-
-
-app.get("/login/:userID", (req, res) => {
-  res.send(`Navigated to the login page for: ${req.params.userID}.`);
-});
-
-const logReq = function (req, res, next) {
-  console.log("Request Received");
-  next();
-};
-
-app.use(logReq);
