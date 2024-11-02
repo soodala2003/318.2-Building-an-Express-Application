@@ -15,7 +15,7 @@ router
     .route("/")
     .get((req, res) => {
         // views/profile.pug
-        res.render("profile");
+        res.render("users");
     })
     .post((req, res) => {
         res.send("Create User");
@@ -27,7 +27,7 @@ router
 // define the user settings page
 // similarly, this route is "/users/settings".
 router.get("/settings", (req, res) => {
-    res.send("Get User Settings");
+    res.redirect("/login")
 });
 
 module.exports = router;
