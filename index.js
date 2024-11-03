@@ -13,7 +13,7 @@ const loginRoutes = require("./routes/login");
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/login", loginRoutes);
-
+app.use(express.static("images")); //, postRoutes);
 
 app.set("view engine", "pug"); // register the template engine
 // ../views
@@ -24,8 +24,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json({ extended: true }));
 
 app.get("/", (req, res) => {
-  res.send("Keeping it simple.");
+  //res.send("Keeping it simple.");
+  res.render("home");
 });
+
+app.get("/download-image", (req, res) => {
+  res.download("./images/exhuma.jpg");
+}); 
 
 app.listen(port, () => {
   console.log(`Server listening on port: ${port}.`);
