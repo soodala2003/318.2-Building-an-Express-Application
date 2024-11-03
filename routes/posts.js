@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+//router.use(express.static("images"));
 
 // middleware that is specific to this router
 router.use((req, res, next) => {
